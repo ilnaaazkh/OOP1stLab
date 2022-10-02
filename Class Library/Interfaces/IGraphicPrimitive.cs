@@ -6,7 +6,7 @@ namespace ClassLibrary.Interfaces
     {
         public void Show(Canvas DrawingCanvas);
         public void MoveTo(Canvas DrawingCanvas);
-        public void Hide();
+        public void Hide(Canvas DrawingCanvas);
         public void ChangeSize(Canvas DrawingCanvas);
         
     }

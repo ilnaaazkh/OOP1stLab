@@ -7,56 +7,91 @@ using System.Windows.Shapes;
 
 namespace ClassLibrary.Implemetations
 {
-    public class MyRectangle : IGraphicPrimitive
+    public class MyRectangle
     {
         private int Height { get; set; }
         private int Width { get; set; }
         private int PositionX { get; set; }
         private int PositionY { get; set; }
 
-        private Rectangle newRect = new Rectangle();
+        private bool IsVisible = true;
+        
+        private Rectangle? newRect;
 
-        private Random rndm = new Random();
-
-        public MyRectangle(int height, int width)
+        public MyRectangle(int height, int width, int positionX, int positionY)
         {
             Height = height;
             Width = width;
-            PositionX = 0;
-            PositionY = 0;
+            PositionX = positionX;
+            PositionY = positionY;
         }
 
         public MyRectangle()
         {
+            Random rndm = new Random();
             Height = rndm.Next(100, 250);
             Width = rndm.Next(100, 250);
+            PositionX = rndm.Next(0, 300);
+            PositionY = rndm.Next(0, 300);
         }
         public void Show(Canvas DrawingCanvas)
         {
-            newRect.Height = Height;
-            newRect.Width = Width;
-            newRect.Fill = Brushes.DarkGreen;
-            newRect.Stroke = Brushes.Black;
-            newRect.StrokeThickness = 3;
+            newRect = new Rectangle {Height = this.Height, 
+                Width = this.Width, 
+                Stroke = Brushes.Black, 
+                StrokeThickness = 3, 
+                Fill = Brushes.DarkGreen, 
+                Visibility = IsVisible ? Visibility.Visible : Visibility.Hidden};
+            Canvas.SetTop(newRect, PositionY);
+            Canvas.SetLeft(newRect, PositionX);
             DrawingCanvas.Children.Add(newRect);
         }
         public void ChangeSize(Canvas DrawingCanvas)
         {
-            newRect.Width = rndm.Next(50, 300);
-            newRect.Height = rndm.Next(50, 300);
+            DrawingCanvas.Children.Remove(newRect);
+            newRect = null;
+            Width = new Random().Next(50, 300);
+            Height = new Random().Next(50, 300);
+            Show(DrawingCanvas);
         }
 
         public void MoveTo(Canvas DrawingCanvas)
         {
-            PositionX = rndm.Next((int)(DrawingCanvas.ActualWidth - Width));
-            PositionY = rndm.Next((int)(DrawingCanvas.ActualHeight - Height));
-            Canvas.SetLeft(newRect, PositionX);
-            Canvas.SetTop(newRect, PositionY);
+            DrawingCanvas.Children.Remove(newRect);
+            newRect = null;
+
+            PositionX = new Random().Next(0, (int)(DrawingCanvas.ActualWidth - Width));
+            PositionY = new Random().Next(0, (int)(DrawingCanvas.ActualHeight - Height));
+
+            Show(DrawingCanvas);
         }
 
-        public void Hide()
+        public void MoveTo(Canvas DrawingCanvas, int deltaX, int deltaY)
         {
-            newRect.Visibility = newRect.IsVisible ? Visibility.Hidden : Visibility.Visible;
+            DrawingCanvas.Children.Remove(newRect);
+            newRect = null;
+
+            PositionX += deltaX;
+            PositionY += deltaY;
+
+            Show(DrawingCanvas);
+        }
+
+        public void Hide(Canvas DrawingCanvas)
+        {
+            DrawingCanvas.Children.Remove(newRect);
+            newRect = null;
+            IsVisible = !IsVisible;
+            Show(DrawingCanvas);
+        }
+
+        public void Dispose()
+        {
+            PositionX = 0;
+            PositionY = 0;
+            Height = 0;
+            Width = 0;
+            newRect = null;
         }
     }
 }

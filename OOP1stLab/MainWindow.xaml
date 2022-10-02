@@ -19,35 +19,36 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
+            <CheckBox Content="Работа с массивом элементов"
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center"
+                      Checked="CheckBox_Checked"
+                      Unchecked="CheckBox_Unchecked"></CheckBox>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="Circle" ToolTip="Создать круг" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Padding="1" Click="Circle_Click" Cursor="Hand">
+                <Button x:Name="Circle" ToolTip="Создать круг" Background="#FFFFFF" Click="Circle_Click" Margin="10" MinHeight="30" MinWidth="30" Padding="1"  Cursor="Hand">
                     <Ellipse Fill="Red" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"></Ellipse>
                 </Button>
-                <Button x:Name="Rectangle" ToolTip="Создать прямоугольник" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Padding="0" Click="Rectangle_Click" Cursor="Hand">
+                <Button x:Name="Rectangle" ToolTip="Создать прямоугольник" Background="#FFFFFF" Click="Rectangle_Click" Margin="10" MinHeight="30" MinWidth="30" Padding="0"  Cursor="Hand">
                     <Rectangle Fill="DarkGreen" Height="20" Width="20" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Rectangle>
                 </Button>
-                <Button x:Name="Triangle" ToolTip="Создать треугольник" Background="#FFFFFF" Padding="5" Margin="10" Click="Triangle_Click"  MinHeight="30" MinWidth="30" Cursor="Hand">
+                <Button x:Name="Triangle" ToolTip="Создать треугольник" Background="#FFFFFF" Click="Triangle_Click" Padding="5" Margin="10"   MinHeight="30" MinWidth="30" Cursor="Hand">
                     <Image Source="C:\Users\Honor\source\repos\OOP1stLab\OOP1stLab\Resources\Triangle.png"></Image>
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="MoveShape" Click="MoveShape_Click" Background="#FFFFFF"  ToolTip="Переместить" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
+                <Button x:Name="MoveShape" Background="#FFFFFF" Click="MoveShape_Click" ToolTip="Переместить" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
                     <Image Source="C:\Users\Honor\source\repos\OOP1stLab\OOP1stLab\Resources\move2.png"></Image>
                 </Button>
-                <Button x:Name="ResizeShape" Click="ResizeShape_Click" ToolTip="Изменить размер" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
+                <Button x:Name="ResizeShape" ToolTip="Изменить размер" Click="ResizeShape_Click" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
                     <Image Source="C:\Users\Honor\source\repos\OOP1stLab\OOP1stLab\Resources\resize2.png"></Image>
                 </Button>
-                <Button x:Name="HideShape" Click="HideShape_Click" ToolTip="Скрыть/Показать" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
+                <Button x:Name="HideShape" ToolTip="Скрыть/Показать" Click="HideShape_Click" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
                     <Image Source="C:\Users\Honor\source\repos\OOP1stLab\OOP1stLab\Resources\hide2.png"></Image>
                 </Button>
-                <Button x:Name="ClearAll" Click="ClearAll_Click" ToolTip="Очистить" Background="#FFFFFF" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
+                <Button x:Name="ClearAll" ToolTip="Очистить" Background="#FFFFFF" Click="ClearAll_Click" Margin="10" MinHeight="30" MinWidth="30" Cursor="Hand" Padding="5">
                     <Image Source="C:\Users\Honor\source\repos\OOP1stLab\OOP1stLab\Resources\Eraser.png"></Image>
                 </Button>
             </StackPanel>
-            <CheckBox Margin="20"  MinHeight="30" MinWidth="30" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Content="Режим группового редактирования">
-                
-            </CheckBox>
         </Grid>
 
         <Canvas Grid.Row = "1"  x:Name="MainCanvas"  Background="White">

@@ -8,56 +8,84 @@ using System.Windows;
 namespace ClassLibrary.Implemetations
 {
 
-    public class MyCircle : IGraphicPrimitive
+    public class MyCircle:IGraphicPrimitive
     {
-        int Diametr { get; set; }
-        int PositionX { get; set; }
-        int PositionY { get; set; }
+        private int Diametr { get; set; }
+        private int PositionX { get; set; } //Координата центра по OX
+        private int PositionY { get; set; } //Координата центра по OY
 
-        private Ellipse newCircle = new Ellipse();
+        private bool IsVisible = true;
 
-        private Random rndm = new Random();
-
-        public MyCircle(int diametr)
+        private Ellipse? el;
+        public MyCircle(int diametr, int positionX, int positionY)
         {
             Diametr = diametr;
-            PositionY = 0;
-            PositionX = 0;
+            PositionY = positionY;
+            PositionX = positionX;
         }
 
         public MyCircle()
         {
+            Random rndm = new Random();
             Diametr = rndm.Next(50, 200);
-            PositionX = 0;
-            PositionY = 0;
+            PositionX = rndm.Next(Diametr/2, 500);
+            PositionY = rndm.Next(Diametr/2, 300);
         }
 
         public void Show(Canvas DrawingCanvas)
         {
-            newCircle.Height = Diametr;
-            newCircle.Width = Diametr;
-            newCircle.Fill = Brushes.Red;
-            newCircle.Stroke = Brushes.Black;
-            newCircle.StrokeThickness = 3;
-            DrawingCanvas.Children.Add(newCircle);
+            el = new Ellipse { Height = Diametr, Width = Diametr, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black, Visibility = IsVisible ? Visibility.Visible : Visibility.Hidden};
+            Canvas.SetLeft(el, PositionX - Diametr/2);
+            Canvas.SetTop(el, PositionY - Diametr/2);
+            DrawingCanvas.Children.Add(el);
         }
         public void MoveTo(Canvas DrawingCanvas)
         {
-            PositionX = rndm.Next((int)(DrawingCanvas.ActualWidth - Diametr));
-            PositionY = rndm.Next((int)(DrawingCanvas.ActualHeight - Diametr));
-            Canvas.SetLeft(newCircle, PositionX);
-            Canvas.SetTop(newCircle, PositionY);
+            DrawingCanvas.Children.Remove(el);
+            el = null;
+
+            PositionX = new Random().Next(Diametr / 2, (int)DrawingCanvas.ActualWidth - Diametr/2);
+            PositionY = new Random().Next(Diametr / 2, (int)DrawingCanvas.ActualHeight - Diametr/2);
+
+            Show(DrawingCanvas);
+        }
+
+        public void MoveTo(Canvas DrawingCanvas, int deltaX, int deltaY)
+        {
+            DrawingCanvas.Children.Remove(el);
+            el = null;
+
+            PositionX += deltaX;
+            PositionY += deltaY;
+
+            Show(DrawingCanvas);
         }
         public void ChangeSize(Canvas DrawingCanvas)
         {
-            Diametr = rndm.Next(10, 100);
-            newCircle.Height = Diametr;
-            newCircle.Width = Diametr;
+            DrawingCanvas.Children.Remove(el);
+            el = null;
+
+            Diametr = new Random().Next(50, 150);
+            Show(DrawingCanvas);
         }
 
-        public void Hide()
+        public void Hide(Canvas DrawingCanvas)
         {
-            newCircle.Visibility = newCircle.IsVisible ? Visibility.Hidden : Visibility.Visible;
+            DrawingCanvas.Children.Remove(el);
+            el = null;
+
+            IsVisible = !IsVisible;
+
+            Show(DrawingCanvas);
         }
+
+        public void Dispose()
+        {
+            Diametr = 0;
+            PositionX = 0;
+            PositionY = 0;
+            el = null;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using ClassLibrary.Implemetations;
 using ClassLibrary.Interfaces;
@@ -12,89 +13,200 @@ namespace OOP1stLab
             InitializeComponent();
         }
 
-        List<IGraphicPrimitive> primitives = new List<IGraphicPrimitive>();
+        List<MyCircle> Circles = new List<MyCircle>();
+        List<MyRectangle> Rects = new List<MyRectangle>();
+        List<MyTriangle> Tris = new List<MyTriangle>();
+
+        Mode mode = Mode.NotChoosed;
+
         bool GroupRedacting = false;
 
         private void Circle_Click(object sender, RoutedEventArgs e)
         {
-            MyCircle circ = new MyCircle();
-            if (GroupRedacting || primitives.Count < 1) 
+            if(mode != Mode.MyCircle)
             {
-                circ.Show(MainCanvas);
-                primitives.Add(circ);
+                mode = Mode.MyCircle;
+                MemoryCleaning();
+                MainCanvas.Children.Clear();
             }
+
+
+            if (GroupRedacting)
+            {
+                int count = new Random().Next(5, 10);
+                for (int i = 0; i < count; i++)
+                {
+                    MyCircle? circ = new MyCircle();
+                    circ.Show(MainCanvas);
+                    Circles.Add(circ);
+                }
+            }
+
+            else if(Circles.Count < 1)
+            {
+                MyCircle? circ = new MyCircle();
+                circ.Show(MainCanvas);
+                Circles.Add(circ);
+            }
+
             else
             {
-                MainCanvas.Children.Clear();
-                primitives.Clear();
-                circ.Show(MainCanvas);
-                primitives.Add(circ);
+                string messageBoxText = "Круг уже был создан";
+                MessageBoxResult result;
+                result = MessageBox.Show(messageBoxText, "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
         }
 
         private void Rectangle_Click(object sender, RoutedEventArgs e)
         {
-            MyRectangle rect = new MyRectangle();
-            if (GroupRedacting || primitives.Count < 1)
+            if (mode != Mode.MyRectangle)
             {
-                rect.Show(MainCanvas);
-                primitives.Add(rect);
+                mode = Mode.MyRectangle;
+                MemoryCleaning();
+                MainCanvas.Children.Clear();
             }
+
+
+            if (GroupRedacting)
+            {
+                int count = new Random().Next(5, 10);
+                for (int i = 0; i < count; i++)
+                {
+                    MyRectangle? rect = new MyRectangle();
+                    rect.Show(MainCanvas);
+                    Rects.Add(rect);
+                }
+            }
+
+            else if (Rects.Count < 1)
+            {
+                MyRectangle? rect = new MyRectangle();
+                rect.Show(MainCanvas);
+                Rects.Add(rect);
+            }
+
             else
             {
-                MainCanvas.Children.Clear();
-                primitives.Clear();
-                rect.Show(MainCanvas);
-                primitives.Add(rect);
+                string messageBoxText = "Прямоугольник уже был создан";
+                MessageBoxResult result;
+                result = MessageBox.Show(messageBoxText, "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Triangle_Click(object sender, RoutedEventArgs e)
         {
-            MyTriangle triangle = new MyTriangle();
-            if (GroupRedacting || primitives.Count < 1)
+            if (mode != Mode.MyTriangle)
             {
-                triangle.Show(MainCanvas);
-                primitives.Add(triangle);
+                mode = Mode.MyTriangle;
+                MemoryCleaning();
+                MainCanvas.Children.Clear();
             }
+
+
+            if (GroupRedacting)
+            {
+                int count = new Random().Next(5, 10);
+                for (int i = 0; i < count; i++)
+                {
+                    MyTriangle? tri = new MyTriangle();
+                    tri.Show(MainCanvas);
+                    Tris.Add(tri);
+                }
+            }
+
+            else if (Tris.Count < 1)
+            {
+                MyTriangle? tri = new MyTriangle();
+                tri.Show(MainCanvas);
+                Tris.Add(tri);
+            }
+
             else
             {
-                MainCanvas.Children.Clear();
-                primitives.Clear();
-                triangle.Show(MainCanvas);
-                primitives.Add(triangle);
+                string messageBoxText = "Треугоольник уже был создан";
+                MessageBoxResult result;
+                result = MessageBox.Show(messageBoxText, "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void MoveShape_Click(object sender, RoutedEventArgs e)
         {
-            foreach(IGraphicPrimitive primitive in primitives)
+            if(mode == Mode.MyCircle)
             {
-                primitive.MoveTo(MainCanvas);
+                foreach(MyCircle c in Circles)
+                {
+                    c.MoveTo(MainCanvas);
+                }
+            }
+            else if(mode == Mode.MyRectangle)
+            {
+                foreach (MyRectangle r in Rects)
+                {
+                    r.MoveTo(MainCanvas);
+                }
+            }
+            else if(mode == Mode.MyTriangle)
+            {
+                foreach (MyTriangle t in Tris)
+                {
+                    t.MoveTo(MainCanvas);
+                }
             }
         }
 
         private void ResizeShape_Click(object sender, RoutedEventArgs e)
         {
-            foreach (IGraphicPrimitive primitive in primitives)
+            if (mode == Mode.MyCircle)
             {
-                primitive.ChangeSize(MainCanvas);
+                foreach (MyCircle c in Circles)
+                {
+                    c.ChangeSize(MainCanvas);
+                }
+            }
+            else if (mode == Mode.MyRectangle)
+            {
+                foreach (MyRectangle r in Rects)
+                {
+                    r.ChangeSize(MainCanvas);
+                }
+            }
+            else if (mode == Mode.MyTriangle)
+            {
+                foreach (MyTriangle t in Tris)
+                {
+                    t.ChangeSize(MainCanvas);
+                }
             }
         }
 
         private void HideShape_Click(object sender, RoutedEventArgs e)
         {
-            foreach(IGraphicPrimitive primitive in primitives)
+            if (mode == Mode.MyCircle)
             {
-                primitive.Hide();
+                foreach (MyCircle c in Circles)
+                {
+                    c.Hide(MainCanvas);
+                }
             }
-
+            else if (mode == Mode.MyRectangle)
+            {
+                foreach (MyRectangle r in Rects)
+                {
+                    r.Hide(MainCanvas);
+                }
+            }
+            else if (mode == Mode.MyTriangle)
+            {
+                foreach (MyTriangle t in Tris)
+                {
+                    t.Hide(MainCanvas);
+                }
+            }
         }
 
         private void ClearAll_Click(object sender, RoutedEventArgs e)
         {
-            primitives.Clear();
+            MemoryCleaning();
             MainCanvas.Children.Clear();
         }
 
@@ -106,8 +218,31 @@ namespace OOP1stLab
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             MainCanvas.Children.Clear();
-            primitives.Clear();
+            MemoryCleaning();
             GroupRedacting = false;
+        }
+
+        private void MemoryCleaning()
+        {
+            for(int i = 0; i < Circles.Count; i++)
+            {
+                Circles[i].Dispose();
+                Circles[i] = null;
+            }
+            for (int i = 0; i < Rects.Count; i++)
+            {
+                Rects[i].Dispose();
+                Rects[i] = null;
+            }
+            for (int i = 0; i < Tris.Count; i++)
+            {
+                Tris[i].Dispose();
+                Tris[i] = null;
+            }
+            Rects.Clear();
+            Circles.Clear();
+            Tris.Clear();
+            GC.Collect();
         }
     }
 }
