@@ -7,15 +7,25 @@ using System.Windows.Shapes;
 
 namespace ClassLibrary.Implemetations
 {
-    public class MyRectangle
+    public class MyRectangle : IGraphicPrimitive
     {
-        private int Height { get; set; }
-        private int Width { get; set; }
-        private int PositionX { get; set; }
-        private int PositionY { get; set; }
+        private int _Height { get; set; }
+        private int _Width { get; set; }
+        private int _PositionX { get; set; }
+        private int _PositionY { get; set; }
 
-        private bool IsVisible = true;
+        private bool _IsVisible = true;
         
+        public int Height { get => _Height; set => _Height = value; }
+
+        public int Width { get => _Width; set => _Width = value; }
+
+        public int PositionX { get => _PositionX; set => _PositionX = value; }
+
+        public int PositionY { get => _PositionY; set => _PositionY = value; }
+
+        public bool IsVisible { get => _IsVisible; set => _IsVisible = value; } 
+
         private Rectangle? newRect;
 
         public MyRectangle(int height, int width, int positionX, int positionY)
@@ -36,14 +46,14 @@ namespace ClassLibrary.Implemetations
         }
         public void Show(Canvas DrawingCanvas)
         {
-            newRect = new Rectangle {Height = this.Height, 
-                Width = this.Width, 
+            newRect = new Rectangle {Height = Height, 
+                Width = Width, 
                 Stroke = Brushes.Black, 
                 StrokeThickness = 3, 
                 Fill = Brushes.DarkGreen, 
-                Visibility = IsVisible ? Visibility.Visible : Visibility.Hidden};
-            Canvas.SetTop(newRect, PositionY);
-            Canvas.SetLeft(newRect, PositionX);
+                Visibility = _IsVisible ? Visibility.Visible : Visibility.Hidden};
+            Canvas.SetTop(newRect, _PositionY);
+            Canvas.SetLeft(newRect, _PositionX);
             DrawingCanvas.Children.Add(newRect);
         }
         public void ChangeSize(Canvas DrawingCanvas)
@@ -60,8 +70,8 @@ namespace ClassLibrary.Implemetations
             DrawingCanvas.Children.Remove(newRect);
             newRect = null;
 
-            PositionX = new Random().Next(0, (int)(DrawingCanvas.ActualWidth - Width));
-            PositionY = new Random().Next(0, (int)(DrawingCanvas.ActualHeight - Height));
+            PositionX = new Random().Next(0, (int)(DrawingCanvas.ActualWidth - _Width));
+            PositionY = new Random().Next(0, (int)(DrawingCanvas.ActualHeight - _Height));
 
             Show(DrawingCanvas);
         }

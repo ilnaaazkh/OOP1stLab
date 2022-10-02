@@ -9,14 +9,27 @@ namespace ClassLibrary.Implemetations
 {
     public class MyTriangle : IGraphicPrimitive
     {
-        private int x1, y1, x2, y2, x3, y3;
+        private int x1;
+        private int y1;
+        private int x2;
+        private int y2;
+        private int x3; 
+        private int y3;
 
-        private int PositionX { get; set; }
+        private int _PositionX;
+        private int _PositionY;
+        private bool _IsVisible = true;
 
-        private int PositionY { get; set; }
+        public int PositionX { get => _PositionX; set => _PositionX = value; }
+        public int PositionY { get => _PositionY; set => _PositionY = value; }
+        public bool IsVisible { get => _IsVisible; set => _IsVisible = value;}
 
-        private bool IsVisible { get; set; } = true;
-
+        public int X1 { get => x1; set => x1 = value; }
+        public int Y1 { get => y1; set => y1 = value; }
+        public int X2 { get => x2; set => x2 = value; }
+        public int Y2 { get => y2; set => y2 = value; }
+        public int X3 { get => x3; set => x3 = value; }
+        public int Y3 { get => y3; set => y3 = value; }
         private Polygon? triangle;
         public MyTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int positionX, int positionY)
         {
@@ -101,7 +114,7 @@ namespace ClassLibrary.Implemetations
         {
             DrawingCanvas.Children.Remove(triangle);
             triangle = null;
-;
+            ;
             PositionX += deltaX;
             PositionY += deltaY;
 
